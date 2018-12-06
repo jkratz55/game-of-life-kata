@@ -23,3 +23,6 @@
 hs_err_pid*
 java/.idea/
 java/.gradle/
+kotlin/.gradle/
+kotlin/.idea/
+kotlin/out/
