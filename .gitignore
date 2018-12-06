@@ -28,3 +28,4 @@ kotlin/.idea/
 kotlin/out/
 python/.idea/
 python/venv/
+*.pyc

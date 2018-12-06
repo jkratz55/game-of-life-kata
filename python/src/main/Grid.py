@@ -80,8 +80,8 @@ class Grid:
 
     def _calculate_living_neighbors(self, i, j):
         live_count = 0
-        for x in range(-1, 1, 1):
-            for y in range(-1, 1, 1):
+        for x in range(-1, 2, 1):
+            for y in range(-1, 2, 1):
                 if i + x < 0 or i + x > (self._rows - 1) or y + j < 0 or y + j > (self._columns - 1):
                     continue
                 live_count += self._state[i + x][y + j]
