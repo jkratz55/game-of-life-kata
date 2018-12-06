@@ -26,3 +26,5 @@ java/.gradle/
 kotlin/.gradle/
 kotlin/.idea/
 kotlin/out/
+python/.idea/
+python/venv/
