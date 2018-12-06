@@ -18,12 +18,12 @@ grid showing the next generation.
 ## Current Implementations
 
 * Java
+* Kotlin
 
 ## Planned Implementations
 
 * C#
 * Python
-* Kotlin
 * Scala
 * GOLang
 * JavaScript
