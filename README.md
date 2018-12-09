@@ -19,11 +19,15 @@ grid showing the next generation.
 
 * Java
 * Kotlin
+* Python
 
-## Planned Implementations
+## Proposed Implementations
 
 * C#
-* Python
 * Scala
 * GOLang
 * JavaScript
+* C++
+* Swift
+* Ruby
+* Groovy
