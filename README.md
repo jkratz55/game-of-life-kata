@@ -20,6 +20,7 @@ grid showing the next generation.
 * Java
 * Kotlin
 * Python
+* Groovy
 
 ## Proposed Implementations
 
@@ -30,4 +31,3 @@ grid showing the next generation.
 * C++
 * Swift
 * Ruby
-* Groovy
