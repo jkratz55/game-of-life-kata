@@ -29,3 +29,5 @@ kotlin/out/
 python/.idea/
 python/venv/
 *.pyc
+groovy/.idea/
+groovy/.gradle/
