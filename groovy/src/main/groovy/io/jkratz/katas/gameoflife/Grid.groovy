@@ -3,7 +3,7 @@ package io.jkratz.katas.gameoflife
 class Grid {
 
     static int DEFAULT_ROWS = 10
-    static int DEFAULT_COLUMMS = 10
+    static int DEFAULT_COLUMNS = 10
     static int CELL_DEAD = 0
     static int CELL_ALIVE = 1
 
@@ -12,14 +12,13 @@ class Grid {
     final int columns = 0
 
     Grid() {
-        this.state = new int[DEFAULT_COLUMMS][DEFAULT_ROWS]
-        Random random = new Random()
+        this.state = new int[DEFAULT_COLUMNS][DEFAULT_ROWS]
         for (int i=0; i<this.state.length; i++) {
             for (int j=0; j<this.state[i].length; j++) {
                 this.state[i][j] = Math.round(Math.random()).toInteger()
             }
         }
-        this.columns = DEFAULT_COLUMMS
+        this.columns = DEFAULT_COLUMNS
         this.rows = DEFAULT_ROWS
     }
 
