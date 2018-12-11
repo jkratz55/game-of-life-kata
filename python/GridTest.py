@@ -2,7 +2,7 @@
 
 import unittest
 
-from src.main.Grid import Grid
+from Grid import Grid
 
 
 class GridTest(unittest.TestCase):

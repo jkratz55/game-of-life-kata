@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from src.main.Grid import Grid
+from Grid import Grid
 
 
 def main():
