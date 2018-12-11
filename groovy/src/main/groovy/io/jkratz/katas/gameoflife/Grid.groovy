@@ -41,14 +41,55 @@ class Grid {
     }
 
     void nextState() {
+        int[][] nextState = new int[this.columns][this.rows]
+        for (int i=0; i<rows; i++) {
+            for(int j=0; j<columns; j++) {
+                nextState[i][j] = this.getNextStateForCell(i,j)
+            }
+        }
 
+        this.state = nextState
     }
 
     private int getNextStateForCell(int i, int j) {
-        return 0
+
+        int liveCount = 0
+        int cellValue = this.state[i][j]
+        for (int x=-1; x<=1; x++) {
+            for (int y=-1; y<=1; y++) {
+                if (i + x < 0 || i + x > (this.rows - 1) || y + j < 0 || y + j > (this.columns - 1)) {
+                    continue
+                }
+                liveCount += this.state[i + x][y + j]
+            }
+        }
+
+        // remove since we may have counted ourselves
+        liveCount -= cellValue
+
+        if (cellValue == CELL_ALIVE && liveCount > 3) {
+            return CELL_DEAD
+        }
+        else if (cellValue == CELL_ALIVE && liveCount < 2) {
+            return CELL_DEAD
+        }
+        else if (cellValue == CELL_DEAD && liveCount == 3) {
+            return CELL_ALIVE
+        } else {
+            return cellValue
+        }
+
     }
 
     private boolean isJagged(int[][] grid) {
-        return false
+        boolean isJagged = false
+        int baseLength = grid[0].length
+        for (int[] arr: grid) {
+            if (arr.length != baseLength) {
+                isJagged = true
+                break
+            }
+        }
+        return isJagged
     }
 }
