@@ -16,29 +16,15 @@ case class Board(grid: Array[Array[Int]]) {
     grid(0).length
   }
 
-  def evolve(): Board = {
-
-    val newGrid = Array.ofDim[Int](rows, columns)
-    for (i <- grid.indices) {
-      for (j <- grid(0).indices) {
-        newGrid(i)(j) = getNextCellState(i,j)
-      }
-    }
-
-    Board(newGrid)
-  }
+  def evolve(): Board = Board(Array.tabulate(rows,columns)(getNextCellState))
 
   private def getNextCellState(i:Int, j: Int): Int = {
-    var liveCount = 0
+
     val cellValue = grid(i)(j)
-    for (x <- -1 to 1; y <- -1 to 1) {
-      if (i + x < 0 || i + x > (this.rows - 1) || y + j < 0 || y + j > (this.columns - 1)) {
-        // do nothing, out of bounds
-      } else {
-        liveCount += grid(i + x)(j + y)
-      }
-    }
-    liveCount -= cellValue
+    val liveCount = (for {
+      x <- (0 max i-1) to (i+1 min rows-1)
+      y <- (0 max j-1) to (j+1 min columns-1)
+    } yield grid(x)(y)).sum - cellValue
 
     if (cellValue.equals(Board.CELL_ALIVE) && (liveCount < 2 || liveCount > 3)) {
       Board.CELL_DEAD
@@ -49,23 +35,11 @@ case class Board(grid: Array[Array[Int]]) {
     }
   }
 
-  private def isJagged(grid: Array[Array[Int]]): Boolean = {
-    var valid = true
-    val size = grid(0).length
-    grid.foreach(row => if (row.length.equals(size)) valid = false)
-    valid
-  }
+  private def isJagged(grid: Array[Array[Int]]): Boolean =
+    grid.exists(_.length != grid.head.length)
 
-  private def isValid(grid: Array[Array[Int]]): Boolean = {
-    var valid = true
-    for (i <- grid.indices; j <- grid(0).indices) {
-      val x = grid(i)(j)
-      if (x != 0 && x != 1) {
-        valid = false
-      }
-    }
-    valid
-  }
+  private def isValid(grid: Array[Array[Int]]): Boolean =
+    grid.forall(_.forall(n => (n & -2)==0))
 }
 
 object Board {
@@ -75,23 +49,11 @@ object Board {
   val DEFAULT_ROWS = 10
   val DEFAULT_COLUMNS = 10
 
-  def random(rows: Int = DEFAULT_ROWS, columns: Int = DEFAULT_COLUMNS): Board = {
-    val grid = Array.ofDim[Int](rows, columns)
-    for (i <- grid.indices) {
-      for (j <- grid(0).indices) {
-        grid(i)(j) = Random.nextInt(2)
-      }
-    }
-    Board(grid=grid)
-  }
+  def random(rows:Int = DEFAULT_ROWS, columns:Int = DEFAULT_COLUMNS): Board =
+    Board(Array.fill(rows,columns)(Random.nextInt(2)))
 
-  def prettyPrint(board: Board): Unit = {
-    val grid = board.grid
-    for (i <- grid.indices) {
-      for (j <- grid(0).indices) {
-        if (grid(i)(j) == 0) print(" - ") else print(" * ")
-      }
-      println()
-    }
-  }
+  def prettyPrint(board: Board): Unit =
+    board.grid
+      .map(_.map(c => if (c == CELL_DEAD) " - " else " * ").mkString)
+      .foreach(println)
 }
