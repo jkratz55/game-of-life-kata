@@ -6,7 +6,7 @@ case class Board(grid: Array[Array[Int]]) {
 
   require(grid != null, "grid cannot be null")
   require(!isJagged(grid), "grid cannot be jagged")
-  require(isValid(grid), "grid contains invalid values, 0 and 1 are the only valid values")
+  require(isValid(grid), "grid must be at least 1X1 and contain only 0s and 1s for values")
 
   val rows: Int = {
     grid.length
@@ -39,7 +39,7 @@ case class Board(grid: Array[Array[Int]]) {
     grid.exists(_.length != grid.head.length)
 
   private def isValid(grid: Array[Array[Int]]): Boolean =
-    grid.forall(_.forall(n => (n & -2)==0))
+    grid.forall(_.forall(n => (n & -2)==0)) && grid.length > 0
 }
 
 object Board {
