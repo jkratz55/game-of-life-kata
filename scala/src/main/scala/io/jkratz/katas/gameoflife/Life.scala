@@ -4,7 +4,7 @@ object Life {
 
   def main(args: Array[String]): Unit = {
 
-    val state0 = Board.random(5,5)
+    val state0 = Board.random()
     println("State 0")
     Board.prettyPrint(state0)
 
