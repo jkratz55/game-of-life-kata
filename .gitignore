@@ -37,3 +37,5 @@ csharp/Life/LifeTest/obj/
 csharp/Life/LifeTest/bin/
 csharp/Life/Life/obj/
 csharp/Life/Life/bin/
+scala/.idea/
+scala/project/target/
