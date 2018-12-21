@@ -22,10 +22,10 @@ grid showing the next generation.
 * Python
 * Groovy
 * Scala
+* C#
 
 ## Proposed Implementations
 
-* C#
 * GOLang
 * JavaScript
 * C++
