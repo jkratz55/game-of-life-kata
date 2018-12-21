@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Life", "Life\Life.csproj", "{698730FD-5A0A-4C3D-B348-119E7028C6EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeTest", "LifeTest\LifeTest.csproj", "{F180F49F-F34D-46CB-9B30-08E7426E40B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{698730FD-5A0A-4C3D-B348-119E7028C6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{698730FD-5A0A-4C3D-B348-119E7028C6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{698730FD-5A0A-4C3D-B348-119E7028C6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{698730FD-5A0A-4C3D-B348-119E7028C6EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F180F49F-F34D-46CB-9B30-08E7426E40B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F180F49F-F34D-46CB-9B30-08E7426E40B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F180F49F-F34D-46CB-9B30-08E7426E40B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F180F49F-F34D-46CB-9B30-08E7426E40B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
