@@ -21,11 +21,11 @@ grid showing the next generation.
 * Kotlin
 * Python
 * Groovy
+* Scala
 
 ## Proposed Implementations
 
 * C#
-* Scala
 * GOLang
 * JavaScript
 * C++
