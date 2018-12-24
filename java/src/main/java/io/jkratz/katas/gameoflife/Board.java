@@ -1,8 +1,5 @@
 package io.jkratz.katas.gameoflife;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 /**
  * The {@code Board} class represents a two dimensional grid holding the
  * state of cells for Conway's Game of Life. The board is represent with
@@ -174,7 +171,7 @@ public class Board {
                 return ValidationResult.INVALID_JAGGED;
             }
             for (int j=0; j<state[i].length; j++) {
-                if (state[i][j] < 0 && state[i][j] > 1) {
+                if (state[i][j] < 0 || state[i][j] > 1) {
                     return ValidationResult.INVALID_BAD_VALUES;
                 }
             }

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GridTest {
+public class BoardTest {
     
     private static int[][] initialState = {
             { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
@@ -21,19 +21,19 @@ public class GridTest {
 
     @Test
     public void testDefaultConstructor() {
-        final Grid grid = new Grid();
-        assertEquals(8, grid.columns());
-        assertEquals(8, grid.rows());
+        final Board board = new Board(8, 8);
+        assertEquals(8, board.columns());
+        assertEquals(8, board.rows());
     }
 
     @Test
     public void testConstructorWithInitialState() {
 
-        final Grid grid = new Grid(initialState);
-        assertEquals(10, grid.columns());
-        assertEquals(10, grid.rows());
+        final Board board = new Board(initialState);
+        assertEquals(10, board.columns());
+        assertEquals(10, board.rows());
 
-        int[][] state = grid.getState();
+        int[][] state = board.getState();
         for (int i=0; i < state.length; i++) {
             assertArrayEquals(initialState[i], state[i]);
         }
@@ -41,7 +41,29 @@ public class GridTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorWithInitialStateNull() {
-        final Grid grid = new Grid(null);
+        final Board board = new Board(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorWithInvalidValues() {
+        int[][] initialState = {
+                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
+                { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, -1, 4, 3, 2 }
+        };
+        final Board board = new Board(initialState);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorWithInvalidSize() {
+        final Board board = new Board(new int[0][0]);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -56,18 +78,18 @@ public class GridTest {
                 { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                { 0, 0, 0, 0, 0, 0 }
         };
 
-        final Grid grid = new Grid(jaggedInitialState);
+        final Board board = new Board(jaggedInitialState);
     }
 
     @Test
     public void testNextState() {
-        final Grid grid = new Grid(initialState);
-        grid.nextState();
+        final Board board = new Board(initialState);
+        board.evolve();
         
-        int[][] results = grid.getState();
+        int[][] results = board.getState();
 
         // Check row 0
         assertEquals(results[0][0], 0);
@@ -205,9 +227,9 @@ public class GridTest {
                 { 1, 1, 0, 0, 0, 0, 0, 0, 1, 1 }
         };
 
-        Grid grid = new Grid(initData);
-        grid.nextState();
-        int[][] results = grid.getState();
+        Board board = new Board(initData);
+        board.evolve();
+        int[][] results = board.getState();
 
         assertEquals(results[0][0], 0);
         assertEquals(results[9][0], 1);
@@ -217,9 +239,9 @@ public class GridTest {
 
     @Test
     public void testNextStateWithMultipleIterations() {
-        Grid grid = new Grid(initialState);
+        Board board = new Board(initialState);
         for (int i=0; i<10000; i++) {
-            grid.nextState();
+            board.evolve();
         }
     }
 }
