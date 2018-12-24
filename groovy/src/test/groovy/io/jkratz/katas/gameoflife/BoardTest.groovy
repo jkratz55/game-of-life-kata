@@ -4,7 +4,7 @@ import org.junit.Test
 
 import static org.junit.Assert.*
 
-class GridTest {
+class BoardTest {
 
     static final int[][] testData = [
             [ 1, 1, 1, 1, 0, 1, 1, 0, 0, 0 ],
@@ -47,14 +47,14 @@ class GridTest {
 
     @Test
     void testDefaultConstructor() {
-        Grid grid = new Grid()
+        Board grid = new Board(10,10)
         assertEquals(10, grid.columns)
         assertEquals(10, grid.rows)
     }
 
     @Test
     void testConstructorWithInitialState() {
-        Grid grid = new Grid(testData)
+        Board grid = new Board(testData)
         assertEquals(10, grid.rows)
         assertEquals(10, grid.columns)
 
@@ -66,21 +66,43 @@ class GridTest {
 
     @Test(expected = IllegalArgumentException.class)
     void testConstructorWithInvalidInitialState() {
-        grid = new Grid(null)
+        grid = new Board(null)
     }
 
     @Test(expected = IllegalArgumentException.class)
     void testConstructorWithNullInitialState() {
-        Grid grid = new Grid(jaggedData)
+        Board grid = new Board(jaggedData)
     }
 
     @Test
     void testNextState() {
-        Grid grid = new Grid(testData)
-        grid.nextState()
+        Board grid = new Board(testData)
+        grid.evolve()
         int[][] state = grid.getState()
         for (int i=0; i < state.length; i++) {
             assertArrayEquals(expectedData[i], state[i])
         }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorWithInvalidValues() {
+        int[][] initialState = [
+            [ 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 ],
+            [ 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 ],
+            [ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            [ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            [ 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 ],
+            [ 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 ],
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+            [ 0, 0, 0, 0, 0, 0, -1, 4, 3, 2 ]
+        ]
+        final Board board = new Board(initialState)
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorWithInvalidSize() {
+        final Board board = new Board(new int[0][0])
     }
 }
