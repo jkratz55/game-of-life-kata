@@ -3,6 +3,14 @@ package io.jkratz.katas.gameoflife
 import java.lang.IllegalArgumentException
 import java.util.*
 
+/**
+ * Class to represent the state of the board for Conway's Game of Life.
+ *
+ * @author Joseph Kratz (joseph.kratz06@gmail.com)
+ * @property state The state of the board
+ * @property rows Count of rows on the board
+ * @property columns Count of columns on the board
+ */
 class Board {
 
     var state: Array<IntArray>
@@ -28,7 +36,7 @@ class Board {
      * Creates Board instance with an initial state.
      *
      * @param initialState The initial state, this cannot be a jagged array.
-     * @throws IllegalArgumentException If the `initialState` is a jagged array, or NULL
+     * @throws IllegalArgumentException If the initialState is not valid
      */
     constructor(initialState: Array<IntArray>) {
         val validationResult = validate(initialState)
@@ -45,7 +53,7 @@ class Board {
     }
 
     /**
-     * Transitions to the next state of the grid.
+     * Transitions to the next state of the board.
      */
     fun evolve() {
         val nextState = Array(this.rows) { IntArray(this.columns) }
@@ -98,12 +106,16 @@ class Board {
                 liveCount += this.state[i + x][y + j]
             }
         }
-
         // remove since we may have counted ourselves
         liveCount -= this.state[i][j]
         return liveCount
     }
 
+    /**
+     * Validates the state of the board.
+     *
+     * @param state 2D state of the board
+     */
     private fun validate(state: Array<IntArray>): ValidationResult {
         if (state.isEmpty() || state[0].isEmpty()) {
             return ValidationResult.INVALID_BAD_SIZE
@@ -133,14 +145,18 @@ class Board {
         const val CELL_DEAD = 0
     }
 
+    /* Represents the validation result of the initial state */
     private enum class ValidationResult(val message: String) {
         VALID(""),
-        INVALID_BAD_VALUES(""),
-        INVALID_BAD_SIZE(""),
-        INVALID_JAGGED("")
+        INVALID_BAD_VALUES("The state contains invalid values, only 0 or 1 is allowed"),
+        INVALID_BAD_SIZE("The state must be at least 1X1 (1 row and 1 column)"),
+        INVALID_JAGGED("The state cannot be jagged.")
     }
 }
 
+/**
+ * Prints the state of the board to standard out
+ */
 fun Board.prettyPrint() {
     for (columns in this.state) {
         for (value in columns) {
