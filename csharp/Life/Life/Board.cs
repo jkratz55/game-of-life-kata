@@ -46,39 +46,35 @@ namespace Life
             State = newState;
         }
 
-        private int NextStateForCell(int x, int y)
+        private int NextStateForCell(int i, int j)
         {
-            int neighborsAlive = CalculateLivingNeighbors(x, y);
-            int cellValue = State[x, y];
-            if (cellValue == CellDead && neighborsAlive == 3)
+            int neighborsAlive = CalculateLivingNeighbors(i, j);
+            int cellValue = State[i, j];
+            switch (cellValue)
             {
-                return CellAlive;
+                case CellDead when neighborsAlive == 3:
+                    return CellAlive;
+                case CellAlive when (neighborsAlive < 2 || neighborsAlive > 3):
+                    return CellDead;
+                default:
+                    return cellValue;
             }
-            if (cellValue == CellAlive && (neighborsAlive < 2 || neighborsAlive > 3))
-            {
-                return CellDead;
-            }
-
-            return cellValue;
         }
 
-        private int CalculateLivingNeighbors(int x, int y)
+        private int CalculateLivingNeighbors(int i, int j)
         {
             int neighborsAlive = 0;
-            for (int i = 0; i < Rows; i++)
+            for (int x=-1; x<=1; x++)
             {
-                for (int j = 0; j < Columns; j++)
+                for (int y=-1; y<=1; y++)
                 {
                     if (i + x < 0 || i + x > (Rows - 1) || y + j < 0 || y + j > (Columns - 1)) {
-                        // Do nothing, index is out of bounds
+                        continue;
                     }
-                    else
-                    {
-                        neighborsAlive += State[i + x, y + j];
-                    }
+                    neighborsAlive += State[i + x, y + j];
                 }
             }
-
+            neighborsAlive -= State[i,j];
             return neighborsAlive;
         }
 

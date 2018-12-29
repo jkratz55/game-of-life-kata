@@ -6,6 +6,44 @@ namespace LifeTest
 {
     public class BoardTest
     {
+        private static readonly int[,] TestData =
+        {
+            {1, 1, 1, 1, 0, 1, 1, 0, 0, 0},
+            {1, 1, 1, 1, 0, 1, 1, 0, 0, 0},
+            {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 0, 1, 1},
+            {1, 1, 0, 0, 0, 0, 0, 0, 1, 1}
+        };
+
+        private static readonly int[,] ExpectedData =
+        {
+            {1, 0, 0, 1, 0, 1, 1, 0, 0, 0},
+            {1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+            {1, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {1, 1, 0, 0, 0, 0, 0, 0, 1, 1},
+            {1, 1, 0, 0, 0, 0, 0, 0, 1, 1}
+        };
+
+        [Fact]
+        public void TestConstructor()
+        {
+            Board board = new Board(TestData);
+            Assert.True(board.Rows == 10);
+            Assert.True(board.Columns == 10);
+            
+            Assert.Equal(TestData, board.State);
+        }
+        
         [Fact]
         public void TestRandom()
         {
@@ -47,7 +85,11 @@ namespace LifeTest
         [Fact]
         public void TestEvolve()
         {
+            Board board = new Board(TestData);
+            board.Evolve();
             
+            board.Print();
+            Assert.Equal(ExpectedData, board.State);
         }
     }
 }
