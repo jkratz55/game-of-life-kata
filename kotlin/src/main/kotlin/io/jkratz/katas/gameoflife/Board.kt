@@ -106,12 +106,16 @@ class Board {
                 liveCount += this.state[i + x][y + j]
             }
         }
-
         // remove since we may have counted ourselves
         liveCount -= this.state[i][j]
         return liveCount
     }
 
+    /**
+     * Validates the state of the board.
+     *
+     * @param state 2D state of the board
+     */
     private fun validate(state: Array<IntArray>): ValidationResult {
         if (state.isEmpty() || state[0].isEmpty()) {
             return ValidationResult.INVALID_BAD_SIZE
@@ -141,6 +145,7 @@ class Board {
         const val CELL_DEAD = 0
     }
 
+    /* Represents the validation result of the initial state */
     private enum class ValidationResult(val message: String) {
         VALID(""),
         INVALID_BAD_VALUES("The state contains invalid values, only 0 or 1 is allowed"),
