@@ -31,3 +31,7 @@ grid showing the next generation.
 * C++
 * Swift
 * Ruby
+* Haskell
+* Ceylon
+* Clojure
+* Rust
