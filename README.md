@@ -23,11 +23,15 @@ grid showing the next generation.
 * Groovy
 * Scala
 * C#
+* GOLang
 
 ## Proposed Implementations
 
-* GOLang
 * JavaScript
 * C++
 * Swift
 * Ruby
+* Haskell
+* Ceylon
+* Clojure
+* Rust
