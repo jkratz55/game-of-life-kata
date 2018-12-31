@@ -2,8 +2,8 @@ package board
 
 import (
 	"errors"
+	"fmt"
 	"math/rand"
-	"strconv"
 	"time"
 )
 
@@ -11,8 +11,8 @@ const CellDead = 0
 const CellAlive = 1
 
 type board struct {
-	state [][]int
-	rows int
+	state   [][]int
+	rows    int
 	columns int
 }
 
@@ -35,11 +35,11 @@ func NewRandomBoard(rows, columns int) (board, error) {
 	// Populate random state
 	for i := range initState {
 		for j := range initState[i] {
-			initState[i][j] = rand.Intn((1 -0 + 1) + 0)
+			initState[i][j] = rand.Intn(2)
 		}
 	}
 
-	return board{state: initState, rows:rows, columns:columns}, nil
+	return board{state: initState, rows: rows, columns: columns}, nil
 }
 
 func NewBoard(initialState [][]int) (board, error) {
@@ -65,7 +65,7 @@ func NewBoard(initialState [][]int) (board, error) {
 		}
 	}
 
-	return board{state:initialState, rows: len(initialState), columns: len(initialState[0])}, nil
+	return board{state: initialState, rows: len(initialState), columns: len(initialState[0])}, nil
 }
 
 func (b *board) Evolve() {
@@ -73,7 +73,7 @@ func (b *board) Evolve() {
 	for i := range newState {
 		newState[i] = make([]int, b.columns)
 		for j := range newState[i] {
-			newState[i][j] = nextStateForCell(b,i,j)
+			newState[i][j] = nextStateForCell(b, i, j)
 		}
 	}
 	b.state = newState
@@ -94,22 +94,26 @@ func (b *board) Columns() int {
 func (b *board) PrettyPrint() {
 	for i := range b.state {
 		for j := range b.state[i] {
-			print(" " + strconv.Itoa(b.state[i][j]) + "")
+			if (b.state[i][j] == CellDead) {
+				fmt.Print(" - ")
+			} else {
+				fmt.Print(" * ")
+			}
 		}
-		println()
+		fmt.Println()
 	}
 }
 
-func nextStateForCell(b *board, i,j int) int {
+func nextStateForCell(b *board, i, j int) int {
 
 	neighborsAlive := 0
 	cellValue := b.state[i][j]
 	for x := -1; x <= 1; x++ {
 		for y := -1; y <= 1; y++ {
-			if i + x < 0 || i + x > (b.rows - 1) || y + j < 0 || y + j > (b.columns - 1) {
+			if i+x < 0 || i+x > (b.rows-1) || y+j < 0 || y+j > (b.columns-1) {
 				continue
 			}
-			neighborsAlive += b.state[i + x][y + j]
+			neighborsAlive += b.state[i+x][y+j]
 		}
 	}
 	neighborsAlive -= cellValue
