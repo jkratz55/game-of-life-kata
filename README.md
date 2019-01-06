@@ -1,6 +1,6 @@
 # Game of Life Kata
 
-This Kata is about calculating the next generation of Conway’s game of life, 
+This Kata is about calculating the next generation of Conway’s Game of Life, 
 given any starting state. 
 
 You start with a two dimensional grid of cells, where each cell is either alive or dead. 
@@ -12,8 +12,8 @@ When calculating the next generation of the grid, follow these rules:
 3. Any live cell with two or three live neighbours lives, unchanged, to the next generation.
 4. Any dead cell with exactly three live neighbours will come to life.
 
-You should write a program that can accept an arbitrary grid of cells, and will output a similar 
-grid showing the next generation.
+The code should allow for the board/world to be created with a valid initial state, or a randomly
+generated state. 
 
 ## Current Implementations
 
