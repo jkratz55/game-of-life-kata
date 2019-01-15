@@ -1,6 +1,6 @@
 # Overview
 
-This repository contains several implementations of Conway's Game of Life in various languages.
+This repository contains implementations of Conway's Game of Life in various languages.
 I use this reposiotry to experiment with different programming languages and comparing them.
 
 ## Current Implementations
@@ -12,13 +12,13 @@ I use this reposiotry to experiment with different programming languages and com
 * Scala
 * C#
 * GOLang
+* Ruby
 
 ## Proposed Implementations
 
 * JavaScript
 * C++
 * Swift
-* Ruby
 * Haskell
 * Ceylon
 * Clojure
