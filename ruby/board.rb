@@ -80,6 +80,23 @@ class Board
     if state.nil?
       raise ArgumentError, 'initial_state cannot be nil'
     end
+
+    if state.length < 1 or state[0].length < 1
+      raise ArgumentError, 'initial state must have a minimum height of 1, and minimum width of 1'
+    end
+    
+    size = state[0].length
+    state.each_with_index do |row, i|
+      if size != state[i].length
+        raise ArgumentError, 'initial state cannot be a jagged 2D array'
+      end
+      row.each_with_index do |cell, j|
+        if cell < 0 or cell > 1
+          raise ArgumentError, "#{state[i][j]} is not a valid value, only 0 or 1 is permitted"
+        end
+      end
+    end
+
   end
 
   def calculate_living_neighbors(i, j)
