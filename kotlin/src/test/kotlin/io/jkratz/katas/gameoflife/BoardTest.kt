@@ -78,6 +78,12 @@ class BoardTest {
         assertEquals(results[0][9], 0)
     }
 
+    @Test
+    fun testHugeGridSize() {
+        val board = Board(1000, 1000)
+        board.evolve()
+    }
+
     companion object {
 
         private val initialState = arrayOf(

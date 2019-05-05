@@ -14,6 +14,7 @@ repositories {
 dependencies {
     compile(kotlin("stdlib-jdk8"))
     compile(group = "junit", name = "junit", version = "4.12")
+    compile(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-jdk8", version = "1.2.1")
 }
 
 tasks.withType<KotlinCompile> {
