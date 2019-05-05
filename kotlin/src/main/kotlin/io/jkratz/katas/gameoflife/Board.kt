@@ -103,19 +103,21 @@ class Board {
      */
     private suspend fun calculateLivingNeighbors(i: Int, j: Int): Int {
         //println("Thead: ${Thread.currentThread().name} - ${Thread.currentThread().id}")
-        var liveCount = 0
-        for (x in -1..1) {
-            for (y in -1..1) {
-                // check for boundary conditions
-                if (i + x < 0 || i + x > rows - 1 || y + j < 0 || y + j > columns - 1) {
-                    continue
+        return withContext(Dispatchers.Default) {
+            var liveCount = 0
+            for (x in -1..1) {
+                for (y in -1..1) {
+                    // check for boundary conditions
+                    if (i + x < 0 || i + x > rows - 1 || y + j < 0 || y + j > columns - 1) {
+                        continue
+                    }
+                    liveCount += state[i + x][y + j]
                 }
-                liveCount += state[i + x][y + j]
             }
+            // remove since we may have counted ourselves
+            liveCount -= state[i][j]
+            liveCount
         }
-        // remove since we may have counted ourselves
-        liveCount -= state[i][j]
-        return liveCount
     }
 
     /**
