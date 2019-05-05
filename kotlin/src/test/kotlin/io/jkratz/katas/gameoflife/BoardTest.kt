@@ -80,7 +80,7 @@ class BoardTest {
 
     @Test
     fun testHugeGridSize() {
-        val board = Board(1000, 1000)
+        val board = Board(10000, 10000)
         board.evolve()
     }
 

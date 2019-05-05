@@ -4,6 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.util.*
+import java.util.concurrent.CompletableFuture
+import kotlin.collections.ArrayList
 
 /**
  * Class to represent the state of the board for Conway's Game of Life.
@@ -57,18 +59,29 @@ class Board {
      * Transitions to the next state of the board.
      */
     fun evolve() {
-        runBlocking {
-            //println("Thead: ${Thread.currentThread().name} - ${Thread.currentThread().id}")
-            val nextState = Array(rows) { IntArray(columns) }
-            for (i in 0 until rows) {
-                for (j in 0 until columns) {
-                    nextState[i][j] = withContext(Dispatchers.Default) {
-                        getNextStateForCell(i, j)
-                    }
-                }
+//        runBlocking {
+//            val nextState = Array(rows) { IntArray(columns) }
+//            for (i in 0 until rows) {
+//                for (j in 0 until columns) {
+//                    nextState[i][j] = withContext(Dispatchers.Default) {
+//                        getNextStateForCell(i, j)
+//                    }
+//                }
+//            }
+//            state = nextState
+//        }
+        val nextState = Array(rows) { IntArray(columns) }
+        val futures = ArrayList<CompletableFuture<Unit>>()
+        for (i in 0 until rows) {
+            for (j in 0 until columns) {
+                 futures.add(CompletableFuture.supplyAsync { getNextStateForCell(i,j) }
+                    .thenApply {
+                        nextState[i][j] = it
+                    })
             }
-            state = nextState
         }
+        futures.forEach { it.join() }
+        state = nextState
     }
 
     /**
@@ -78,11 +91,9 @@ class Board {
      * @param j Column index of the grid
      * @return 1 is cell alive, 0 if cell is dead
      */
-    private suspend fun getNextStateForCell(i: Int, j: Int): Int {
+    private fun getNextStateForCell(i: Int, j: Int): Int {
 
-        //println("Thead: ${Thread.currentThread().name} - ${Thread.currentThread().id}")
-
-        val aliveNeighbors = withContext(Dispatchers.Default) { calculateLivingNeighbors(i, j) }
+        val aliveNeighbors = calculateLivingNeighbors(i, j)
         val cellValue = state[i][j]
 
         return if (cellValue == CELL_ALIVE && (aliveNeighbors < 2 || aliveNeighbors > 3)) {
@@ -101,23 +112,20 @@ class Board {
      * @param j Column index of the grid
      * @return Count of living neighbors for particular cell
      */
-    private suspend fun calculateLivingNeighbors(i: Int, j: Int): Int {
-        //println("Thead: ${Thread.currentThread().name} - ${Thread.currentThread().id}")
-        return withContext(Dispatchers.Default) {
-            var liveCount = 0
-            for (x in -1..1) {
-                for (y in -1..1) {
-                    // check for boundary conditions
-                    if (i + x < 0 || i + x > rows - 1 || y + j < 0 || y + j > columns - 1) {
-                        continue
-                    }
-                    liveCount += state[i + x][y + j]
+    private fun calculateLivingNeighbors(i: Int, j: Int): Int {
+        var liveCount = 0
+        for (x in -1..1) {
+            for (y in -1..1) {
+                // check for boundary conditions
+                if (i + x < 0 || i + x > rows - 1 || y + j < 0 || y + j > columns - 1) {
+                    continue
                 }
+                liveCount += state[i + x][y + j]
             }
-            // remove since we may have counted ourselves
-            liveCount -= state[i][j]
-            liveCount
         }
+        // remove since we may have counted ourselves
+        liveCount -= state[i][j]
+        return liveCount
     }
 
     /**
