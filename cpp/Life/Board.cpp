@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
+#include <sstream>
 
 Board::Board(int rows, int columns) {
 	// If the rows and columns are not valid raise exception
@@ -46,5 +48,12 @@ void Board::Evolve() {
 }
 
 void Board::PrettyPrint() {
-
+	std::ostringstream out;
+	for (std::vector<std::vector<int>>::iterator it = this->cells.begin(); it != this->cells.end(); ++it) {
+		for (std::vector<int>::iterator jt = it->begin(); jt != it->end(); ++jt) {
+			out << " " << *jt;
+		}
+		out << "\n";
+	}
+	std::cout << out.str();
 }

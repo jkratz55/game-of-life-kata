@@ -6,7 +6,8 @@
 
 int main()
 {
-	Board board = Board(-1, 10);
+	Board board = Board(10, 10);
+	board.PrettyPrint();
 	return 0;
 }
 
