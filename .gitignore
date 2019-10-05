@@ -40,3 +40,5 @@ csharp/Life/Life/bin/
 scala/.idea/
 scala/project/target/
 golang/.idea/
+cpp/Life/Debug/
+cpp/Life/.vs/
