@@ -9,6 +9,8 @@ private:
 	const int CELL_ALIVE = 1;
 	int rows, columns;
 	std::vector<std::vector<int>> cells;
+	int getNextStateForCell(int i, int j);
+	int calculateLivingNeighbors(int i, int j);
 
 public:
 	Board(int rows, int columns);

@@ -44,7 +44,14 @@ std::vector<std::vector<int>> Board::State() {
 }
 
 void Board::Evolve() {
+	std::vector<std::vector<int>> next(this->rows, std::vector<int>(this->columns, 0));
 
+	for (int i = 0; i < this->cells.size(); i++) {
+		for (int j = 0; j < this->cells[i].size(); j++) {
+			next[i][j] = getNextStateForCell(i, j);
+		}
+	}
+	this->cells = next;
 }
 
 void Board::PrettyPrint() {
@@ -56,4 +63,38 @@ void Board::PrettyPrint() {
 		out << "\n";
 	}
 	std::cout << out.str();
+}
+
+int Board::getNextStateForCell(int i, int j) {
+	int alive = this->calculateLivingNeighbors(i, j);
+	int cellValue = this->cells[i][j];
+	int newValue = 0;
+
+	if (cellValue == CELL_DEAD && alive == 3) {
+		newValue = CELL_ALIVE;
+	}
+	else if (cellValue == CELL_ALIVE && (alive < 2 || alive > 3)) {
+		newValue == CELL_DEAD;
+	}
+	else {
+		newValue = cellValue;
+	}
+	return newValue;
+}
+
+int Board::calculateLivingNeighbors(int i, int j) {
+	int liveCount = 0;
+	for (int x = -1; x <= 1; x++) {
+		for (int y = -1; y <= 1; y++) {
+			// check for boundary conditions
+			if (i + x < 0 || i + x >(this->rows - 1) || y + j < 0 || y + j >(this->columns - 1)) {
+				continue;
+			}
+			liveCount += this->cells[i + x][y + j];
+		}
+	}
+
+	// remove since we may have counted ourselves
+	liveCount -= this->cells[i][j];
+	return liveCount;
 }
